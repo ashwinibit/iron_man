@@ -176,7 +176,7 @@ function checkTime(i) {
 
 </head>
 
-<body onload="startTime()">
+<body onload="startTime();popup();">
 
     <canvas id="c"></canvas>
     
@@ -197,18 +197,6 @@ function checkTime(i) {
     </div>
     
     
-
-
-    <span>
-        <p>
-            Chehra Dekhne Ko Trs Gye Hm 
-            Unki Aakhe Pdhe To Zamana Ho Gaya
-        </p>
-        <p>
-            Jab Bhe Dil Dukhate Ho Tum
-            Aur Bhe Jada Yaad Aate Ho Tum
-        </p>
-    </span>
 
     <script>
     // geting canvas by id c
@@ -300,6 +288,12 @@ function checkTime(i) {
           }
         }
     </script>
+   
+   <script>
+  function popup() {
+    alert("Click On The Clock");
+  }
+</script>
 
 
 

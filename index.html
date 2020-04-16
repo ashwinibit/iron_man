@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    
+    #clock{
+        display: block;
+        /* position: relative; */
+        color: #01ff01;
+        top: 0%;
+        /* left: 13%; */
+        width: max-content;
+        font-size: 8vh;
+        opacity: 1;
+        /* bottom:450px;
+        left: 10px; */
+    }
+    /* Page settings */
+    html {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        /* overflow-y: hidden; */
+    }
+    body {
+        text-align: center;
+        display: table;
+        background: url(iron.png);
+        background-position: center;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        
+    }
+    
+    canvas {
+        width: 100%;
+        height: 100vh;
+        display:block;
+        opacity: 0.65;
+        /* z-index: 0.1; */
+    }
+
+    .main_container{
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+
+    }
+    
+    
+    .main_container .element{
+        position: fixed;
+        padding: 20px;
+        top: calc(50%);
+        left: calc(50%);
+        border-radius: 20px;
+        width: -moz-max-content;
+        transform: translate(-50%, -50%);
+    }
+
+
+
+    .main_container .element:nth-child(n):hover{
+        background: rgba(119, 119, 119, 0.418);
+    }
+
+
+
+    /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0px;
+  top: -80px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #c4c4c400;
+    margin: auto;
+    padding: 20px;
+    /* border: 1px solid #888; */
+    /* width: 80%; */
+    position: relative;
+    top: calc(50%);
+    transform: translate(-50%, -50%);
+    left: calc(50%);
+}
+
+.modal-content p{
+    font-size: 8.5vh;
+    line-height: 1.8;
+    color: #01ff01;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+  /* border-right: .15em solid orange; /*The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 3.5s steps(40, end),
+    blink-caret .75s step-end infinite;
+
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* The typewriter cursor effect
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+} */
+
+
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  /* font-size: 28px; */
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+</style>
+<!-- ----------------clock------------- -->
+<script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('clock').innerHTML =
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+  return i;
+}
+</script>
+
+
+
+</head>
+
+<body onload="startTime()">
+
+    <canvas id="c"></canvas>
+    
+    <div class="main_container">
+        <div class="element">
+            <div id="myBtn"><div id="clock"></div></div>
+          
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+            
+                <!-- Modal content -->
+                <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <p>LOVE U 3000</p>
+                </div>
+        </div>
+    </div>
+    
+    
+
+
+    <span>
+        <p>
+            Chehra Dekhne Ko Trs Gye Hm 
+            Unki Aakhe Pdhe To Zamana Ho Gaya
+        </p>
+        <p>
+            Jab Bhe Dil Dukhate Ho Tum
+            Aur Bhe Jada Yaad Aate Ho Tum
+        </p>
+    </span>
+
+    <script>
+    // geting canvas by id c
+    var c = document.getElementById("c");
+    var ctx = c.getContext("2d");
+
+    //making the canvas full screen
+    c.height = window.innerHeight;
+    c.width = window.innerWidth;
+
+    //chinese characters - taken from the unicode charset
+    var matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+    //converting the string into an array of single characters
+    matrix = matrix.split("");
+
+    var font_size = 10;
+    var columns = c.width / font_size; //number of columns for the rain
+    //an array of drops - one per column
+    var drops = [];
+    //x below is the x coordinate
+    //1 = y co-ordinate of the drop(same for every drop initially)
+    for(var x = 0; x < columns; x++)
+        drops[x] = 1; 
+
+    //drawing the characters
+    function draw()
+    {
+        //Black BG for the canvas
+        //translucent BG to show trail
+        ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "#0F0"; //green text
+        ctx.font = font_size + "px arial";
+        //looping over drops
+        for( var i = 0; i < drops.length; i++ )
+        {
+            //a random chinese character to print
+            var text = matrix[ Math.floor( Math.random() * matrix.length ) ];
+            //x = i*font_size, y = value of drops[i]*font_size
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
+
+            //sending the drop back to the top randomly after it has crossed the screen
+            //adding a randomness to the reset to make the drops scattered on the Y axis
+            if( drops[i] * font_size > c.height && Math.random() > 0.975 )
+                drops[i] = 0;
+
+            //incrementing Y coordinate
+            drops[i]++;
+        }
+    }
+
+    setInterval( draw, 35 );
+
+    
+
+    </script>  
+    
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        var clock = document.getElementById("clock");
+        
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+          modal.style.display = "block";
+          clock.style.display = "none";
+        }
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = "none";
+        clock.style.display = "block";
+          
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            clock.style.display = "block";
+          }
+        }
+    </script>
+
+
+
+</body>
+</html>
